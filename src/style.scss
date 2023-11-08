@@ -1,0 +1,113 @@
+$light-grey: #d3d6db;
+$blue-grey: #3a4750;
+$dark-grey: #303841;
+$my-red: #be3144;
+
+
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+html {
+    font-size: 62.5%; // 1 rem = 10 px (browser default is 16)
+
+    @media (max-width: 1700px) {
+        font-size: 56.25%;
+    }
+
+    @media (max-width: 1200px) {
+        font-size: 50%;
+    }
+
+    @media (max-width: 750px) {
+        font-size: 40%;
+    }
+}
+
+body{
+    background-color: $light-grey;
+    color: $dark-grey;
+}
+
+header{
+
+    text-align: center;
+    margin-top: 7rem;
+    h2{
+        font-size: 3rem;
+        padding-bottom: 1rem;
+    }
+    h4{
+        font-size: 1.5rem;
+    }
+    .start-instruction{
+        animation: becomeVisible 5s;
+    }
+    .end-instruction{
+        opacity: 0;
+    }
+}
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 11rem;
+
+    .board {
+        margin-left: auto;
+        margin-right: auto;
+        //16:9 ratio, add media queries for other devices
+        min-height: 60vh;
+        min-width: 33vw;
+        table-layout: fixed;
+
+        tr {
+            td:nth-child(2n+2) {
+                background-color: $blue-grey;
+            }
+
+            td:nth-child(2n+3) {
+                background-color: $my-red;
+            }
+        }
+        td:after{
+            content: "\00A0"
+        }
+
+        .chess-space {
+            border: 2px solid black;
+            color:white;
+            font-size: 4rem;
+            text-align: center;
+            overflow: hidden;
+            /*each space gets a seventh of total space*/
+            width: 12.5%;
+            height:12.5%;
+            &.endGoalHover{
+                background-color: green;
+            }
+            
+        }
+    }
+}
+
+
+@keyframes becomeVisible{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+    
+}
+
+@keyframes shrinkText{
+    100%{font-size: 0%;}
+}
+
+.shrink-text{
+    animation: shrinkText;
+}
