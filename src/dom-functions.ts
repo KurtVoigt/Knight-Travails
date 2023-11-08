@@ -45,7 +45,7 @@ function removeKnight(cell: HTMLTableCellElement): void {
     cell.innerHTML = "";
 }
 
-function awaitUserKnightPlacement(): Promise<number[]>{
+function awaitUserKnightPlacement(): Promise<number[]> {
     const board = document.getElementsByClassName("board")[0] as HTMLTableElement;
     const rows = board.getElementsByTagName("tr");
     let id: Promise<number[]> = new Promise(function (resolve, reject) {
@@ -65,7 +65,7 @@ function awaitUserKnightPlacement(): Promise<number[]>{
 
 }
 
-function awaitUserEndPlacement(): Promise<number[]>{
+function awaitUserEndPlacement(): Promise<number[]> {
     const board = document.getElementsByClassName("board")[0] as HTMLTableElement;
     const rows = board.getElementsByTagName("tr");
     let id: Promise<number[]> = new Promise(function (resolve, reject) {
@@ -75,13 +75,13 @@ function awaitUserEndPlacement(): Promise<number[]>{
                 cells[j].addEventListener("mouseenter", () => {
                     cells[j].classList.add("endGoalHover");
                 });
-                cells[j].addEventListener("mouseleave", ()=>{
+                cells[j].addEventListener("mouseleave", () => {
                     cells[j].classList.remove("endGoalHover");
                 });
-                cells[j].addEventListener("click",()=>{
+                cells[j].addEventListener("click", () => {
                     removeKnightStartClickListeners();
                     resolve(convertIDToNumArray(cells[j].id));
- 
+
                 });
             }
         }
@@ -91,9 +91,9 @@ function awaitUserEndPlacement(): Promise<number[]>{
 
 }
 
-function convertIDToNumArray(cellID:string):number[]{
+function convertIDToNumArray(cellID: string): number[] {
     let ret = [];
-    if(cellID.length === 2){
+    if (cellID.length === 2) {
         ret.push(Number(cellID.charAt(0)));
         ret.push(Number(cellID.charAt(1)));
     }
@@ -111,21 +111,30 @@ function removeKnightStartClickListeners(): void {
     }
 }
 
-function addCheck(instruction:HTMLHeadingElement):void{
+function addCheck(instruction: HTMLHeadingElement): void {
     const text = instruction.innerText;
     instruction.innerHTML = `&#10003; <s> ${text}</s>`;
 }
 
-function addFadeIn(instruction:HTMLHeadingElement):void{
+function addFadeIn(instruction: HTMLHeadingElement): void {
     instruction.className = "start-instruction";
 }
 
-function animatePath(path:number[][]):void{
-   for(let i=0; i<path.length; ++i){
-       const eleID = path[i][0].toString() + path[i][1].toString();
-       const space = document.getElementById(eleID);
-       space?.classList.add("shrink-text");     
-   }
+function animatePath(path: number[][]): void {
+    for (let i = 0; i < path.length; ++i) {
+        const eleID = path[i][0].toString() + path[i][1].toString();
+        const space = document.getElementById(eleID) as HTMLTableCellElement;
+        setTimeout(() => {
+            space.classList.add("shrink-text");
+            if (i === path.length - 1)
+                addKnight(space);
+            else
+                space.innerText = (i + 1).toString();
+        }, i * 1500);
+
+    }
 }
 
-export { addFadeIn, AddBoardRows, awaitUserKnightPlacement, awaitUserEndPlacement, addCheck, animatePath};
+
+
+export { addFadeIn, AddBoardRows, awaitUserKnightPlacement, awaitUserEndPlacement, addCheck, animatePath };

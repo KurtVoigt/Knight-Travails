@@ -103,11 +103,16 @@ header{
     100% {opacity: 1;}
     
 }
-
+@keyframes becomeiVisible{
+    0% {opacity: 1;}
+    100% {opacity: 0.5;}
+    
+}
 @keyframes shrinkText{
-    100%{font-size: 0%;}
+    0% {font-size: 1.5rem;}
+    100%{font-size: 0rem;}
 }
 
 .shrink-text{
-    animation: shrinkText;
+    animation: becomeiVisible 2s;
 }
