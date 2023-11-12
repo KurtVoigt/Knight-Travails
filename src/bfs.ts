@@ -37,7 +37,7 @@ class ChessArr {
         console.log(coord);
 
         for (let i = 0; i < possibleMoves.length; i++) {
-            if (coord.x + possibleMoves[i].x > 0 && coord.y + possibleMoves[i].y > 0
+            if (coord.x + possibleMoves[i].x > -1 && coord.y + possibleMoves[i].y > -1 
                 && coord.x + possibleMoves[i].x < 8 && coord.y + possibleMoves[i].y < 8) {
                 nextMoves.push(this.data[coord.x + possibleMoves[i].x][coord.y + possibleMoves[i].y]);
             }
@@ -48,8 +48,8 @@ class ChessArr {
 
     private tracePath(node: ChessSpace, current: number[][]): number[][]{
         if (node.parent === null){
-            current.unshift([node.x,node.y]);
-            return current; 
+            current.unshift([node.x,node.y]) 
+           return current; 
         }
         else{
             current.unshift([node.x,node.y]);
@@ -61,14 +61,15 @@ class ChessArr {
         const discovered = new Queue();
         discovered.push(this.data[start[0]][start[1]]);
         this.data[start[0]][start[1]].discovered = true;
+        console.log(start);
+        console.log(end);
 
         while (!discovered.isEmpty()) {
             let currentSpace = discovered.pop();
             if (currentSpace) {
                 if (currentSpace!.x === end[0] && currentSpace!.y === end[1]){
                     //need new data format to describe path
-                    let arr: number[][] = [];
-                    console.log(this.tracePath(currentSpace, arr)); 
+                    let arr: number[][] = this.tracePath(currentSpace,[]);
                     return arr;
                 }
                 //create new coords from possible moves

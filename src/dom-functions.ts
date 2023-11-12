@@ -37,6 +37,17 @@ function AddBoardRows() {
     board.appendChild(lastRow);
 }
 
+function resetHeader():void{
+    const startInstruct = document.getElementsByClassName("start-instruction")[0] as HTMLHeadingElement;
+    const endInstruct = document.getElementsByClassName("end-instruction")[0] as HTMLHeadingElement;
+    const resetButton = document.getElementsByClassName("reset-button")[0] as HTMLButtonElement;
+    startInstruct.innerHTML = "Click somewhere on the board to choose your starting position";
+    endInstruct.innerHTML = "Now choose your desired end position";
+    endInstruct.classList.remove("fade-in");
+    resetButton.classList.remove("fade-in");
+
+}
+
 function addKnight(cell: HTMLTableCellElement): void {
     cell.innerHTML = "&#x2658;";
 }
@@ -116,8 +127,9 @@ function addCheck(instruction: HTMLHeadingElement): void {
     instruction.innerHTML = `&#10003; <s> ${text}</s>`;
 }
 
-function addFadeIn(instruction: HTMLHeadingElement): void {
-    instruction.className = "start-instruction";
+function addFadeIn(instruction: HTMLElement): void {
+    instruction.classList.add("fade-in");
+
 }
 
 function animatePath(path: number[][]): void {
@@ -135,6 +147,14 @@ function animatePath(path: number[][]): void {
     }
 }
 
+function clearBoard():void{
+            const board = document.getElementsByClassName("board")[0];
+            while(board.firstChild){
+                board.removeChild(board.firstChild);
+            }
+
+}
 
 
-export { addFadeIn, AddBoardRows, awaitUserKnightPlacement, awaitUserEndPlacement, addCheck, animatePath };
+
+export { clearBoard ,addFadeIn, AddBoardRows, awaitUserKnightPlacement, awaitUserEndPlacement, addCheck, animatePath, resetHeader };
